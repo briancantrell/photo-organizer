@@ -38,8 +38,14 @@ class Organizer
     end
   end
 
+
+  def move!
+    @organize_mode = :move
+  end
+
   def move?
-    false
+    @organize_mode ||= :copy
+    @organize_mode == :move
   end
 
   def photo_time_parts(photo_path)

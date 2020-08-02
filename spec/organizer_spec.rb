@@ -43,13 +43,20 @@ describe "organizer" do
       File.join(destination_directory, "0000-no-exif", "00-45.jpeg"))).to be_truthy
   end
 
-  it "deletes organized images from source directory" do
+  context "when organize mode is set to :copy" do
+    it "leaves source images in the source directory" do
+      subject.organize
+      source_photos = Dir.children(source_directory)
+      expect(source_photos.length).to eq 4
+    end
   end
 
-
-  context "destination month & year subdirectories already exist" do
-    it "uses the existing directories" do
-
+  context "when organize mode is set to :move" do
+    it "empties the source image directory" do
+      subject.move!
+      subject.organize
+      source_photos = Dir.children(source_directory)
+      expect(source_photos.length).to eq 0
     end
   end
 end
