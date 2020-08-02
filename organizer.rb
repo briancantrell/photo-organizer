@@ -1,5 +1,5 @@
-require 'exifr/jpeg'
-require 'pry'
+require "exifr/jpeg"
+require "pry"
 
 class Organizer
   def initialize(source_directory, destination_directory)
@@ -37,7 +37,6 @@ class Organizer
       end
     end
   end
-
 
   def move!
     @organize_mode = :move
