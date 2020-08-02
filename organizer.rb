@@ -1,10 +1,13 @@
 require "exifr/jpeg"
 require "pry"
 
+class PhotoDirectoryNotFoundError < StandardError ; end
+
 class Organizer
   def initialize(source_directory, destination_directory)
     @source_directory = ensure_trailing_slash(source_directory)
     @destination_directory = ensure_trailing_slash(destination_directory)
+    raise PhotoDirectoryNotFoundError unless File.directory?(@source_directory) && File.directory?(@destination_directory)
   end
 
   def ensure_trailing_slash(directory_path)
@@ -16,10 +19,13 @@ class Organizer
   end
 
   def organize
+    puts "Organizing..."
     Dir.children(@source_directory).each do |item|
-      next if File.directory?(item)
+      next if File.directory?(item) || item == ".DS_Store"
 
       source_photo_path = File.join(@source_directory, item)
+      puts "- #{item}"
+
       photo_year, photo_month = photo_time_parts(source_photo_path)
 
       if photo_year.nil?

@@ -59,5 +59,17 @@ describe "organizer" do
       expect(source_photos.length).to eq 0
     end
   end
+
+  describe "error handling" do
+    it "raises an error if source or destination directories do not exist" do
+      expect {
+        Organizer.new("bogus/directory", destination_directory)
+      }.to raise_error PhotoDirectoryNotFoundError
+
+      expect {
+        Organizer.new(source_directory, "bogus/directory")
+      }.to raise_error PhotoDirectoryNotFoundError
+    end
+  end
 end
 

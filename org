@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require_relative 'organizer.rb'
+
+begin
+  Organizer.new(ARGV[0], ARGV[1]).organize
+  puts "Organized!"
+rescue PhotoDirectoryNotFoundError
+  puts "Error: Source or destination directory could not be found."
+end
+
